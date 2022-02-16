@@ -407,6 +407,8 @@ def gdtot(url: str) -> str:
     if CRYPT is None:
         raise DirectDownloadLinkException("ERROR: CRYPT cookie not provided")
 
+    match = re.findall(r'https?://(.+)\.gdtot\.(.+)\/\S+\/\S+', url)[0]
+
     with requests.Session() as client:
         client.cookies.update({'crypt': CRYPT})
         res = client.get(url)
