@@ -37,7 +37,7 @@ def parse_info(data):
         info_parsed[kv[0].lower()] = kv[1]
     return info_parsed
 
-def appdrive(url: str) -> str:
+def appdrive_dl(url: str) -> str:
     client = requests.Session()
     client.headers.update({
         "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
