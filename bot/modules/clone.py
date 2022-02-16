@@ -9,7 +9,7 @@ from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.mirror_utils.status_utils.clone_status import CloneStatus
 from bot import dispatcher, LOGGER, CLONE_LIMIT, STOP_DUPLICATE, download_dict, download_dict_lock, Interval
-from bot.helper.ext_utils.bot_utils import get_readable_file_size, is_gdrive_link, is_gdtot_link, new_thread
+from bot.helper.ext_utils.bot_utils import get_readable_file_size, is_gdrive_link, is_gdtot_link, is_appdrive_link, new_thread
 from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot, appdrive_dl
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
 
@@ -32,12 +32,16 @@ def cloneNode(update, context):
         else:
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
     is_gdtot = is_gdtot_link(link)
+    if is_gdtot:
+            link = gdtot(link) 
+    is_appdrive = is_appdrive_link(link)    
     is_driveapp = True if "driveapp.in" in link else False
     is_appdrive = True if "appdrive.in" in link else False
     if is_driveapp:
         try:
             msg = sendMessage(f"Pʀᴏᴄᴇssɪɴɢ ᴅʀɪᴠᴇAᴘᴘ Lɪɴᴋ:-\n<code>{link}</code>", context.bot, update)
-            link = appdrive_dl(link)
+            apdict = appdrive_dl(link)
+            link = apdict.get('gdrive_link')
             deleteMessage(context.bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(context.bot, msg)
@@ -45,7 +49,8 @@ def cloneNode(update, context):
     if is_appdrive:
         try:
             msg = sendMessage(f"Pʀᴏᴄᴇssɪɴɢ Aᴘᴘᴅʀɪᴠᴇ Lɪɴᴋ:- \n<code>{link}</code>", context.bot, update)
-            link = appdrive_dl(link)
+            apdict = appdrive_dl(link)
+            link = apdict.get('gdrive_link')
             deleteMessage(context.bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(context.bot, msg)
