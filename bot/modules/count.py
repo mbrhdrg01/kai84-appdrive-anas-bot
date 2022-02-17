@@ -40,7 +40,7 @@ def countNode(update, context):
                return sendMessage("Error", context.bot, update)
         except DirectDownloadLinkException as e:
             return sendMessage(str(e), context.bot, update)
-    is_driveapp = is_driveapp_link(link)
+    is_appdrive = is_appdrive_link(link)
     if is_appdrive:
         try:
             link = appdrive_dl(link)
