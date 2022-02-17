@@ -32,22 +32,24 @@ def countNode(update, context):
        is_driveapp = True
     if 'appdrive.in' in link:
        is_appdrive = True
-    if is_driveapp:
-        try:
-            link = appdrive_dl(link)
-            if not is_gdrive_link(link):
-               return sendMessage("Error", context.bot, update)
-        except DirectDownloadLinkException as e:
-            return sendMessage(str(e), context.bot, update)
-    if is_appdrive:
-        try:
-            link = appdrive_dl(link)
-            if not is_gdrive_link(link):
-               return sendMessage("Error", context.bot, update)
-            else:
-               pass
-        except DirectDownloadLinkException as e:
-            return sendMessage(str(e), context.bot, update)
+    is_driveapp = is_driveapp_link(link)
+        if is_driveapp:
+            apdict = driveapp(link)
+            link = apdict.get('gdrive_link')
+        deleteMessage(context.bot, msg)
+    except DirectDownloadLinkException as e:
+        deleteMessage(context.bot, msg)
+        LOGGER.error(e)
+        return sendMessage(str(e), context.bot, update)
+    is_appdrive = is_appdrive_link(link)
+        if is_appdrive:
+            apdict = appdrive(link)
+            link = apdict.get('gdrive_link')
+        deleteMessage(context.bot, msg)
+    except DirectDownloadLinkException as e:
+        deleteMessage(context.bot, msg)
+        LOGGER.error(e)
+        return sendMessage(str(e), context.bot, update)
     if gdtot_link:
         try:
             link = gdtot(link)
