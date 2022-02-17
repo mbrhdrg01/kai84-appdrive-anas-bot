@@ -55,14 +55,14 @@ def stats(update, context):
             f'<b>SWAP:</b> {swap_t} | <b>Used:</b> {swap_p}%\n'\
             f'<b>Memory Total:</b> {mem_t}\n'\
             f'<b>Memory Free:</b> {mem_a}\n'\
-            f'<b>Memory Used:</b> {mem_u}\n©️ Modded By @Kai_8_4'
+            f'<b>Memory Used:</b> {mem_u}\n©️ Modded By @ZKP143'
     sendMessage(stats, context.bot, update)
 
 
 def start(update, context):
     buttons = ButtonMaker()
-    buttons.buildbutton("Repo", "https://www.github.com/anasty17/mirror-leech-telegram-bot")
-    buttons.buildbutton("Report Group", "https://t.me/+MwgSi5vmQEA2N2Vk")
+    buttons.buildbutton("Repo", "https://t.me/+21-626z8Zko3YWU1")
+    buttons.buildbutton("CREATOR", "https://t.me/zkp143")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
@@ -175,7 +175,7 @@ help_string_telegraph = f'''<br>
 '''
 
 help = telegraph.create_page(
-        title='Mirror-Leech-Bot Help',
+        title='MalluMovies-Mirror-Bot Help',
         content=help_string_telegraph,
     )["path"]
 
