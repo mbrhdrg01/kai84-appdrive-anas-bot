@@ -33,7 +33,7 @@ def countNode(update, context):
     if 'appdrive.in' in link:
        is_appdrive = True
     is_driveapp = is_driveapp_link(link)
-        if is_driveapp:
+    if is_driveapp:
         try:
             link = appdrive_dl(link)
             if not is_gdrive_link(link):
