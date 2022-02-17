@@ -32,9 +32,7 @@ def cloneNode(update, context):
             tag = f"@{reply_to.from_user.username}"
         else:
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
-    is_gdtot = is_gdtot_link(link)
-    if is_gdtot:
-            link = gdtot(link) 
+    is_gdtot = is_gdtot_link(link)    
     is_appdrive = is_appdrive_link(link)    
     is_driveapp = True if "driveapp.in" in link else False
     is_appdrive = True if "appdrive.in" in link else False
