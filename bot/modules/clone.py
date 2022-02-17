@@ -63,10 +63,12 @@ def cloneNode(update, context):
             deleteMessage(context.bot, msg)
             return sendMessage(str(e), context.bot, update)
     if is_gdrive_link(link):
+        msg = sendMessage(f"<b>Cloning:</b> <code>{link}</code>", context.bot, update)
+        LOGGER.info(f"Cloning: {link}")
         gd = GoogleDriveHelper()
-        res, size, name, files = gd.helper(link)
-        if res != "":
-            return sendMessage(res, context.bot, update)
+        result = gd.clone(link)
+        deleteMessage(context.bot, msg)
+        sendMessage(result, context.bot, update)
         if STOP_DUPLICATE:
             LOGGER.info('Checking File/Folder if already in Drive...')
             smsg, button = gd.drive_list(name, True, True)
